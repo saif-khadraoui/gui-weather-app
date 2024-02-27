@@ -1,0 +1,61 @@
+.container{
+    flex: 7;
+    padding: 20px;
+    background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.location{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.input{
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    background-color: white;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+.input input{
+    border: none;
+    outline: none;
+    width: 300px;
+}
+
+.homeComponents{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.summaryWeather{
+    width: 300px;
+    height: 250px;
+    background-color: white;
+    border-radius: 8px;
+}
+
+.weeklyWeather{
+    display: flex;
+    gap: 10px;
+}
+
+.day{
+    width: 150px;
+    height: 250px;
+    background-color: white;
+    border-radius: 8px;
+}

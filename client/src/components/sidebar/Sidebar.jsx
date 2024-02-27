@@ -2,6 +2,11 @@ import React from 'react'
 import styles from "./sidebar.module.css"
 import { FaCloud } from "react-icons/fa6";
 import { IoCloudyNightSharp } from "react-icons/io5";
+import { FaHistory } from "react-icons/fa";
+import { SiSimpleanalytics } from "react-icons/si";
+import { GoAlertFill } from "react-icons/go";
+
+
 import MenuLink from './menuLink/MenuLink';
 
 function Sidebar() {
@@ -15,17 +20,17 @@ function Sidebar() {
     {
       title: "History",
       path: "/dashboard/history",
-      icon: <FaCloud />
+      icon: <FaHistory />
     },
     {
       title: "Analytics",
       path: "/dashboard/analytics",
-      icon: <FaCloud />
+      icon: <SiSimpleanalytics />
     },
     {
       title: "Alerts",
       path: "/dashboard/alerts",
-      icon: <FaCloud />
+      icon: <GoAlertFill />
     }
   ]
 
