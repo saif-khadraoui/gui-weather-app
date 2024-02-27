@@ -9,7 +9,6 @@ function MenuLink({ item }) {
     <Link to={item.path} className={`${styles.container} ${pathname.pathname === item.path && styles.active}`}>
         {item.icon}
         {item.title}
-        test
     </Link>
   )
 }
