@@ -1,11 +1,17 @@
 .container{
-    flex: 7;
-    padding: 20px;
-    background-color: var(--bg);
+    /* flex: 7; */
+    width: 100%;
+    height: 100vh;
+    overflow: auto;
+}
+
+.wrapper{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 50px;
+    padding: 20px;
+    width: 100%;
 }
 
 .header{
@@ -37,8 +43,11 @@
 
 .homeComponents{
     display: flex;
+    /* justify-content: center; */
+    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
+    width: 100%;
 }
 
 .summaryWeather{
@@ -46,6 +55,36 @@
     height: 250px;
     background-color: white;
     border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.summaryWeather h6{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.summaryWeather .top{
+    display: flex;
+    justify-content: space-between;
+}
+
+.summaryWeather .middle{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summaryWeather .middle h6{
+    font-weight: bold;
+    font-size: 60px;
+}
+
+.summaryWeather .bottom .info span{
+    font-weight: bold;
 }
 
 .weeklyWeather{
@@ -58,4 +97,58 @@
     height: 250px;
     background-color: white;
     border-radius: 8px;
+}
+
+.inDepthWeather{
+    background-color: white;
+    border-radius: 8px;
+    width: 350px;
+    height: 250px;
+}
+
+@media screen and (max-width: 1000px) {
+    .container{
+        display: flex;
+        justify-content: center;
+    }
+    .input input{
+        max-width: 150px;
+    }
+
+    .weeklyWeather{
+        width: 100%;
+        /* max-height: 250px;
+        overflow-x: auto; */
+        /* display: none; */
+    }
+
+
+    .weeklyWeather .day{
+        width: 20%;
+    }
+
+    .homeComponents{
+        flex-direction: column;
+    }
+
+    .summaryWeather{
+        width: 100%;
+    }
+
+    .inDepthWeather{
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .weeklyWeather .day{
+        height: 150px;
+    }
+}
+
+
+@media screen and (max-width: 500px) {
+    .weeklyWeather{
+        display: none;
+    }
 }
