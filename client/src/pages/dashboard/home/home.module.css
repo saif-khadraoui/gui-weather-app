@@ -87,6 +87,11 @@
     font-weight: bold;
 }
 
+.summaryWeather .weatherIcon img{
+    width: 100px;
+    height: 100px;
+}
+
 .weeklyWeather{
     display: flex;
     gap: 10px;
@@ -97,6 +102,24 @@
     height: 250px;
     background-color: white;
     border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.day h4{
+    font-size: 16px;
+}
+
+.day h3{
+    font-size: 36px;
+}
+
+.day img{
+    width: 100px;
+    height: 100px;
 }
 
 .inDepthWeather{

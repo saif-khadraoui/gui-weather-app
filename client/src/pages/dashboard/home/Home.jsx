@@ -20,6 +20,7 @@ function Home() {
     humidity: null,
     wind: null
   })
+  const [weeklyWeather, setWeeklyWeather] = useState([])
 
   const enterSearch = async (event) => {
     if (event.key == "Enter"){
@@ -28,11 +29,16 @@ function Home() {
   }
 
   const searchWeather = async () => {
-    console.log(location)
+    console.log(weeklyWeather)
     setChosenLocation(location)
 
     const apiKey = "286326f4933546ffacd81752240103"
-    await Axios.get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`).then((response) => {
+    // await Axios.get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`).then((response) => {
+    //   console.log(response)
+ 
+    // })
+
+    await Axios.get(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${location}&days=5&aqi=no&alerts=no`).then((response) => {
       console.log(response)
       setWeatherData({
         temperature: response.data.current.temp_c,
@@ -42,7 +48,10 @@ function Home() {
         wind: response.data.current.wind_kph,
         icon: response.data.current.condition.icon
       })
+      console.log(response.data?.forecast?.forecastday)
+      setWeeklyWeather(response.data?.forecast?.forecastday)
     })
+
 
   }
 
@@ -120,12 +129,27 @@ function Home() {
 
           </div>
           <div className={styles.weeklyWeather}>
+              {weeklyWeather ? (
+                <>
+                  {weeklyWeather.map((forecastday, idx) => {
+                    return (
+                      <div className={styles.day}>
+                        <h4>{days[(d + idx + 1) % days.length]}</h4>
+                        <img src={forecastday.day.condition.icon} alt=""/>
+                        <h3>{forecastday.day.avgtemp_c}°</h3>
+                      </div>
+                    )
+                  })}
+                </>
+              ) : (
+                <>
+                </>
+              )}
+              {/* <div className={styles.day}></div>
               <div className={styles.day}></div>
               <div className={styles.day}></div>
               <div className={styles.day}></div>
-              <div className={styles.day}></div>
-              <div className={styles.day}></div>
-              {/* <div className={styles.day}></div> */}
+              <div className={styles.day}></div> */}
           </div>
           <div className={styles.inDepthWeather}>
 
