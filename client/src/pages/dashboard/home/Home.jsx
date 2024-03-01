@@ -1,47 +1,120 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from "./home.module.css"
 import { IoSearch } from "react-icons/io5";
 import { FaLocationArrow } from "react-icons/fa";
 import { MdSunny } from "react-icons/md";
+import Axios from "axios";
 
 
 function Home() {
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const d = new Date().getDay()
+  const currentDay = days[d]
+  const [position, setPosition] = useState({ latitude: null, longitude: null });
+  const [location, setLocation] = useState("")
+  const [chosenLocation, setChosenLocation] = useState("")
+  const [weatherData, setWeatherData] = useState({
+    temperature: null,
+    time: null,
+    precipitation: null,
+    humidity: null,
+    wind: null
+  })
+
+  const enterSearch = async (event) => {
+    if (event.key == "Enter"){
+      await searchWeather()
+    }
+  }
+
+  const searchWeather = async () => {
+    console.log(location)
+    setChosenLocation(location)
+
+    const apiKey = "286326f4933546ffacd81752240103"
+    await Axios.get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`).then((response) => {
+      console.log(response)
+      setWeatherData({
+        temperature: response.data.current.temp_c,
+        time: response.data.location.localtime.slice(11, response.data.location.localtime.length),
+        precipitation: response.data.current.precip_in,
+        humidity: response.data.current.humidity,
+        wind: response.data.current.wind_kph,
+        icon: response.data.current.condition.icon
+      })
+    })
+
+  }
+
+  useEffect(() => {
+
+    
+    const getLocation = async () => {
+      // const apiKey = "AIzaSyAtcogGL_3iJSG-zhsONFnbtYkCQaPi3HU"
+      // await Axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${position?.latitude},${position?.longitude}&key=${apiKey}`).then((response) => {
+      //   console.log(response)
+      // })
+    }
+
+    // const getCurrentWeather = async () => {
+    //   const apiKey = "286326f4933546ffacd81752240103"
+    //   await Axios.get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}&aqi=no`).then((response) => {
+    //     console.log(response)
+    //   })
+    // }
+
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        setPosition({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+        getLocation()
+        // getCurrentWeather()
+      });
+    } else {
+      console.log("Geolocation is not available in your browser.");
+    }
+  }, [])
+
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
         <div className={styles.header}>
           <div className={styles.location}>
             <FaLocationArrow />
-            <p>location</p>
+            {/* <p>{position.latitude}, {position.longitude}</p> */}
+            <p>{chosenLocation ? chosenLocation : (position.latitude, position.longitude)}</p>
           </div>
           <div className={styles.input}>
-            <input type="text" placeholder='search a city' />
-            <IoSearch />
+            <input type="text" placeholder='search a city' onChange={((e) => setLocation(e.target.value))} onKeyDown={enterSearch}/>
+            <IoSearch onClick={searchWeather}/>
           </div>
         </div>
         <div className={styles.homeComponents}>
           <div className={styles.summaryWeather}>
             <div className={styles.top}>
-              <h6>Monday</h6>
-              <h6>11:43pm</h6>
+              <h6>{currentDay}</h6>
+              <h6>{weatherData?.time}</h6>
             </div>
             <div className={styles.middle}>
               <div className={styles.temperature}>
-                <h6>8°</h6>
+                <h6>{weatherData?.temperature}°</h6>
               </div>
               <div className={styles.weatherIcon}>
-                <MdSunny style={{ width: "90px", height: "90px" }}/>
+                {/* <MdSunny style={{ width: "90px", height: "90px" }}/> */}
+                <img src={weatherData?.icon} alt='' />
               </div>
             </div>
             <div className={styles.bottom}>
               <div className={styles.info}>
-                <p>Precipitation: <span>17%</span></p>
+                <p>Precipitation: <span>{weatherData?.precipitation} inches</span></p>
               </div>
               <div className={styles.info}>
-                <p>Humidity: <span>5%</span></p>
+                <p>Humidity: <span>{weatherData?.humidity}</span></p>
               </div>
               <div className={styles.info}>
-                <p>Wind: <span>36 km/h</span></p>
+                <p>Wind: <span>{weatherData?.wind} km/h</span></p>
               </div>
             </div>
 
